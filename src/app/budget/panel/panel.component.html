@@ -1,1 +1,35 @@
-<p>panel works!</p>
+<div 
+    class="row p-3 my-2 align-items-center border border-dark rounded animate__animated animate__flipInX" 
+    id="panel">
+
+    <div class="col-6 p-2">
+      <label class="col-form-label">Número de pàgines</label>
+    </div>
+    <div class="col-6">
+        <div class="input-group">
+            <button (click)="add(budgetService.totalPrice)" class="btn btn-warning text-light">
+                <strong>+</strong>
+            </button>
+            <input type="number" class="form-control"/>
+            <button (click)="add(budgetService.totalPrice)" class="btn btn-warning text-light">
+                <strong>-</strong>
+            </button>
+        </div>
+    </div>
+
+    <div class="col-6 p-2">
+        <label class="col-form-label">Número d'idiomes</label>
+    </div>
+    <div class="col-6">
+          <div class="input-group">
+            <button (click)="add(budgetService.totalPrice)" class="btn btn-warning text-light">
+                <strong>+</strong>
+            </button>
+            <input type="number" class="form-control"/>
+            <button (click)="add(budgetService.totalPrice)" class="btn btn-warning text-light">
+                <strong>-</strong>
+            </button>
+          </div>
+    </div>
+
+</div>

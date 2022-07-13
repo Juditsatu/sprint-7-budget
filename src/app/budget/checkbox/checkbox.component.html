@@ -1,0 +1,20 @@
+<div class="form-check" (ngSubmit)="submit()" novalidate>
+      <div *ngFor="let budget of budgetService.budgets; let i = index">
+        <input type="checkbox"
+        class="form-check-input"
+        [value]="budget.price"
+        (change)="onCheckboxChange($event)" 
+        #checkBox
+        />
+        {{ budget.option }} ({{ budget.price }} €) 
+        <app-panel *ngIf="budget.option === 'Una pàgina web'"></app-panel>
+      </div>
+</div>
+<div class="fs-5 pt-2">
+      <p>Preu: 
+        <span class="badge bg-primary text-wrap">
+        {{ budgetService.totalPrice | number }} €
+        </span>
+      </p>
+</div>
+<button type="submit" class="btn btn-primary">Submit</button>
