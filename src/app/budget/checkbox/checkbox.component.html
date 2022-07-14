@@ -7,7 +7,7 @@
         #checkBox
         />
         {{ budget.option }} ({{ budget.price }} €) 
-        <app-panel *ngIf="budget.option === 'Una pàgina web'"></app-panel>
+        <app-panel [hidden]="!budgetService.edited" *ngIf="budget.id === 'web'" ></app-panel>
       </div>
 </div>
 <div class="fs-5 pt-2">

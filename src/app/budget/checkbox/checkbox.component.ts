@@ -10,8 +10,6 @@ import { BudgetService } from '../services/budget.service';
 export class CheckboxComponent implements OnInit {
 
   constructor(public budgetService: BudgetService) {}
-
-  webOption: boolean = false
   
   onCheckboxChange(event: any) {
     if (event.target.checked) {

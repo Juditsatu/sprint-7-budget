@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { BudgetService } from '../services/budget.service';
 
 @Component({
@@ -6,15 +6,21 @@ import { BudgetService } from '../services/budget.service';
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.css']
 })
-export class PanelComponent implements OnInit {
+export class PanelComponent {
 
   constructor(public budgetService: BudgetService) {}
 
-  add(value: number) {
+  value:number = 30;
+  num: number = 1;
+
+  add(value: number): void {
     this.budgetService.totalPrice += value;
+    
+    if (this.budgetService.totalPrice < 500) {
+      this.budgetService.totalPrice = this.budgetService.budgets[0].price ;
+    }
   }
 
-  ngOnInit(): void {
-  }
+
 
 }
