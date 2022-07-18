@@ -7,7 +7,12 @@
         #checkBox
         />
         {{ budget.option }} ({{ budget.price }} €) 
-        <app-panel [hidden]="!budgetService.edited" *ngIf="budget.id === 'web'" ></app-panel>
+        <!-- [ngClass]="{
+          'btn-dark': regionActiva === region,
+          'btn-outline-dark': regionActiva !== region
+          }" -->
+        <app-panel [ngClass]="getSelectorWeb(option)"></app-panel>
+        <!-- <app-panel [hidden]="!budgetService.edited" *ngIf="budget.id === 'web'" ></app-panel> -->
       </div>
 </div>
 <div class="fs-5 pt-2">

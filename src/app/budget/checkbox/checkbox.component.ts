@@ -19,6 +19,10 @@ export class CheckboxComponent implements OnInit {
     }
   }
 
+  getSelectorWeb(option: boolean): boolean {
+    return this.budgetService.budgets[0].id === 'web' ? this.budgetService.edited : !this.budgetService.edited
+  }
+
   submit() {
     console.log(this.budgetService.totalPrice);
   }
