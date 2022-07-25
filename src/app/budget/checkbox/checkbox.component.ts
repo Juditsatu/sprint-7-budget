@@ -19,9 +19,12 @@ export class CheckboxComponent implements OnInit {
     }
   }
 
-  getSelectorWeb(option: boolean): boolean {
-    return this.budgetService.budgets[0].id === 'web' ? this.budgetService.edited : !this.budgetService.edited
-  }
+  // showPanel(index: number) {
+  //   if (this.budgetService.budgets[index].id === 'web') {
+  //     this.budgetService.edited;
+  //     console.log(true)
+  //   };
+  // }
 
   submit() {
     console.log(this.budgetService.totalPrice);

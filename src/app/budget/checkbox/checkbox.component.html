@@ -7,18 +7,14 @@
         #checkBox
         />
         {{ budget.option }} ({{ budget.price }} €) 
-        <!-- [ngClass]="{
-          'btn-dark': regionActiva === region,
-          'btn-outline-dark': regionActiva !== region
-          }" -->
-        <app-panel [ngClass]="getSelectorWeb(option)"></app-panel>
         <!-- <app-panel [hidden]="!budgetService.edited" *ngIf="budget.id === 'web'" ></app-panel> -->
+        <app-panel *ngIf="budget.id === 'web'"></app-panel>
       </div>
 </div>
 <div class="fs-5 pt-2">
       <p>Preu: 
         <span class="badge bg-primary text-wrap">
-        {{ budgetService.totalPrice | number }} €
+        {{ budgetService.totalPrice + budgetService.totalPriceOptions | number }} €
         </span>
       </p>
 </div>

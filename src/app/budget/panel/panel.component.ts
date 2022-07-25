@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { BudgetService } from '../services/budget.service';
 
 @Component({
@@ -6,21 +7,23 @@ import { BudgetService } from '../services/budget.service';
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.css']
 })
-export class PanelComponent {
+export class PanelComponent implements OnInit {
 
   constructor(public budgetService: BudgetService) {}
-
+  
   value:number = 30;
   num: number = 1;
+  
+  ngOnInit(): void {
 
-  add(value: number): void {
-    this.budgetService.totalPrice += value;
+    this.budgetService.add(this.value)
     
-    if (this.budgetService.totalPrice < 500) {
-      this.budgetService.totalPrice = this.budgetService.budgets[0].price ;
-    }
   }
 
+  panelForm: FormGroup = new FormGroup({
+    pages: new FormControl(1),
+    languages: new FormControl(1)
+  })
 
 
 }

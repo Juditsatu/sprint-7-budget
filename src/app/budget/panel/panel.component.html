@@ -1,20 +1,21 @@
 <!-- [hidden]="!budgetService.edited" -->
-<div 
+<div
     class="row p-3 my-2 align-items-center border border-dark rounded animate__animated animate__flipInX" 
     id="panel">
     <div class="col-6 p-2">
       <label class="col-form-label">Número de pàgines</label>
     </div>
-    <div class="col-6">
+    <div class="col-6" [formGroup]="panelForm">
         <div class="input-group">
-            <button (click)="add(value)" class="btn btn-warning text-light">
+            <button (click)="budgetService.add(value)" class="btn btn-warning text-light">
                 <strong>+</strong>
             </button>
-            <input type="number" class="form-control" 
-            min="1"
-            oninput="this.value = Math.abs(this.value)"
-            value = "1"/>
-            <button (click)="add(-value)" class="btn btn-warning text-light">
+            <input  type="number" 
+                    class="form-control" 
+                    min="1"
+                    oninput="this.value"
+                    formControlName="pages"/>
+            <button (click)="budgetService.add(-value)" class="btn btn-warning text-light">
                 <strong>-</strong>
             </button>
         </div>
@@ -25,16 +26,18 @@
     </div>
     <div class="col-6">
           <div class="input-group">
-            <button (click)="add(value)" class="btn btn-warning text-light">
+            <button (click)="budgetService.add(value)" class="btn btn-warning text-light">
                 <strong>+</strong>
             </button>
-            <input type="number" class="form-control" 
-            oninput="this.value = Math.abs(this.value)"
-            [value]= "1"/>
-            <button (click)="add(-value)" class="btn btn-warning text-light">
+            <input  type="number" 
+                    class="form-control" 
+                    oninput="this.value"
+                    [value]= "1"/>
+            <!-- oninput="this.value = Math.abs(this.value)" -->
+            <button (click)="budgetService.add(-value)" class="btn btn-warning text-light">
                 <strong>-</strong>
             </button>
           </div>
     </div>
-
+    <pre> {{ panelForm.value | json}} </pre>
 </div>
