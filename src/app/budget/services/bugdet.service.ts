@@ -12,8 +12,10 @@ export interface Budget {
 
 export class BugdetService {
 
-  totalPrice: number = 0;
   totalPriceOptions: number = 0;
+  totalPrice: number = this.totalPriceOptions;
+
+  webOption: string = 'web';
 
   // budgets: Budget[] = [
   //   { option: 'Web page', price: 500, id: 'web' },
@@ -30,8 +32,19 @@ export class BugdetService {
   }
 
   sumWebOptions(value: number) {
-    if ('web') {
-      this.totalPriceOptions = value;
-    }
+      this.totalPrice += value;
   }
+
+  //sum budgets value on languages & pages
+  add(quantity: number, price: number) {
+
+    this.totalPriceOptions += quantity * price;
+
+    if (this.totalPriceOptions <= 0) {
+      this.totalPriceOptions = 0;
+    }
+
+    console.log(this.totalPriceOptions)
+  }
+  
 }

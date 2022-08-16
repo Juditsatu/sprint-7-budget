@@ -1,1 +1,85 @@
-<p>panel works!</p>
+<!-- [hidden]="!budgetService.edited" -->
+<div
+  class="row p-3 my-2 align-items-center border rounded animate__animated animate__flipInX"
+  id="panel"
+  [formGroup]="panelForm"
+>
+  <!-- PAGES -->
+  <div class="col-6 p-2">
+    <label class="col-form-label"
+      >Pages
+      <!--(?) Instructions -->
+      <span
+        type="button"
+        (click)="open(mymodal)"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        class="bi bi-question-circle"
+      >
+      </span>
+    </label>
+  </div>
+  <div class="col-sm-6">
+    <div class="input-group">
+      <button type="button" class="btn btn-info text-light"><strong>+</strong></button>
+      <input
+        type="number"
+        class="form-control"
+        min="1"
+        oninput="this.quantity"
+        formControlName="pages"
+      />
+      <button type="button" class="btn btn-info text-light"><strong>-</strong></button>
+    </div>
+  </div>
+
+  <!-- LANGUAGES -->
+  <div class="col-6 p-2">
+    <label class="col-form-label"
+      >Languages
+      <!--(?) Instructions -->
+      <span
+        type="button"
+        (click)="open(mymodal)"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        class="bi bi-question-circle"
+      >
+      </span>
+    </label>
+  </div>
+  <div class="col-sm-6">
+    <div class="input-group">
+      <button type="button" class="btn btn-info text-light"><strong>+</strong></button>
+
+      <input type="number" class="form-control" formControlName="languages" />
+
+      <button type="button" class="btn btn-info text-light"><strong>-</strong></button>
+    </div>
+  </div>
+  <!-- <pre> {{ (panelForm.value.pages + panelForm.value.languages) * 30 }} </pre> -->
+</div>
+
+<!-- MODAL -->
+<ng-template #mymodal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">How it works</h4>
+  </div>
+  <div class="modal-body">
+    Please select the number of pages and/or languages you want. You must choose
+    at least one of each.
+    <br>
+    Currently selected:
+    Pages(<span>{{ panelForm.value.pages }}</span>)
+    Languages(<span>{{ panelForm.value.languages }}</span>)
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="modal.close('Save click')"
+    >
+      Ok
+    </button>
+  </div>
+</ng-template>
