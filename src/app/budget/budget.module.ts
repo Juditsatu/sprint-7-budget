@@ -4,13 +4,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { HomeComponent } from './home/home.component';
 import { PanelComponent } from './panel/panel.component';
+import { ModalComponent } from './modal/modal.component';
 
 
 
 @NgModule({
   declarations: [
     HomeComponent,
-    PanelComponent
+    PanelComponent,
+    ModalComponent
   ],
   imports: [
     CommonModule,

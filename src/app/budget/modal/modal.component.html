@@ -1,0 +1,22 @@
+<!-- Modal icon btn -->
+<span type="button"
+      (click)="open(mymodal)"
+      data-bs-toggle="modal"
+      class="bi bi-question-circle"> 
+</span>
+
+<!-- MODAL -->
+<ng-template #mymodal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">How it works</h4>
+  </div>
+  <div class="modal-body">
+    Please select the number of pages and/or languages you want. You must choose
+    at least one of each.
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">
+      Ok
+    </button>
+  </div>
+</ng-template>

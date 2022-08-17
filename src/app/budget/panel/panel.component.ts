@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 import { BugdetService } from '../services/bugdet.service';
 
@@ -11,19 +10,12 @@ import { BugdetService } from '../services/bugdet.service';
 })
 export class PanelComponent implements OnInit {
 
-  constructor( public budgetService: BugdetService, private modalService: NgbModal ) { }
-
-  quantity:number = 1;
-  pricePerOption: number = 30;
+  constructor( public budgetService: BugdetService ) { }
   
-  // formModal: any;
+  totalPricePanel: number = 0;
 
   ngOnInit(): void {
-
-    // this.formModal = new window.bootstrap.modal
-
-    this.budgetService.add(this.quantity, this.pricePerOption)
-    
+    // this.budgetService.addOptions(this.panelForm.value, this.panelForm.value.pages)
   }
 
   panelForm: FormGroup = new FormGroup({
@@ -31,31 +23,28 @@ export class PanelComponent implements OnInit {
     languages: new FormControl(1)
   })
 
-  addQuantity(value: number) {
-    value += 1;
-  }
-  
+  add(id: string){
 
-  //Information Modal
-  title = 'appBootstrap';
-
-  closeResult!: string;
-
-  open(content: any) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismisse ${this.getDismissReason(reason)}`;
-    })
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return  `with: ${reason}`;
+    if (id === 'pages') {
+      this.panelForm.value.pages++;
     }
+
+    if (id === 'languages') {
+      this.panelForm.value.languages++;
+    }
+
   }
+
+  substract(id: string) {
+
+    if (id === 'pages' && this.panelForm.value.pages > 1) {
+      this.panelForm.value.pages--;
+    }
+
+    if (id === 'languages' && this.panelForm.value.languages > 1) {
+      this.panelForm.value.languages--;
+    }
+
+  }
+
 }

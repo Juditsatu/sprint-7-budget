@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 
 export interface Budget {
-  option: string;
-  price: number;
   id: string;
+  price: number;
 }
 
 @Injectable({
@@ -13,15 +12,16 @@ export interface Budget {
 export class BugdetService {
 
   totalPriceOptions: number = 0;
-  totalPrice: number = this.totalPriceOptions;
+  totalPrice: number = 0;
 
-  webOption: string = 'web';
 
-  // budgets: Budget[] = [
-  //   { option: 'Web page', price: 500, id: 'web' },
-  //   { option: 'SEO service', price: 300, id: 'seo' },
-  //   { option: 'Google Ads Campaign', price: 200, id: 'ads' },
-  // ];
+  budgets: Budget[] = [
+    { id: 'web', price: 500 },
+    { id: 'seo', price: 300 },
+    { id: 'ads', price: 200 },
+    { id: 'pages', price: 30 },
+    { id: 'language', price: 30 },
+  ];
 
   sumCheckboxOptions(checked: boolean, price: number) {
     if (checked) {
@@ -31,20 +31,31 @@ export class BugdetService {
     }
   }
 
-  sumWebOptions(value: number) {
-      this.totalPrice += value;
-  }
+  addOptions(id: string, quantity: number) {
 
-  //sum budgets value on languages & pages
-  add(quantity: number, price: number) {
+    if (id === 'pages') {
+      this.totalPriceOptions += quantity * 30;
+    }
 
-    this.totalPriceOptions += quantity * price;
+    if (id === 'languages') {
+      this.totalPriceOptions += quantity * 30;
+    }
 
-    if (this.totalPriceOptions <= 0) {
+    if (quantity < 1) {
       this.totalPriceOptions = 0;
     }
 
-    console.log(this.totalPriceOptions)
+  }
+
+  //sum budgets value on languages & pages
+  calculateTotal(priceOptions: number, priceWeb: number): number {
+    
+    const totalPrice = priceOptions + priceWeb;
+
+    console.log(totalPrice);
+
+    return totalPrice;
+
   }
   
 }

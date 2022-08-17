@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
     this.budgetForm.get('web')?.valueChanges.subscribe((selected: boolean) => {
       this.webChecked = selected;
       this.budgetService.sumCheckboxOptions(selected, 500);
+      this.budgetService.sumCheckboxOptions(selected, 500 + 60);
     });
 
     this.budgetForm.get('seo')?.valueChanges.subscribe((selected: boolean) => {
@@ -38,5 +39,9 @@ export class HomeComponent implements OnInit {
       this.budgetService.sumCheckboxOptions(selected, 200);
     });
 
+  }
+
+  calculateTotal(value: number) {
+    this.totalPrice = this.budgetService.calculateTotal(value, 30)
   }
 }
