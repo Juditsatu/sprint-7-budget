@@ -5,6 +5,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { PanelComponent } from './panel/panel.component';
 import { ModalComponent } from './modal/modal.component';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -12,11 +14,13 @@ import { ModalComponent } from './modal/modal.component';
   declarations: [
     HomeComponent,
     PanelComponent,
-    ModalComponent
+    ModalComponent,
+    WelcomePageComponent
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   exports: [
     HomeComponent
