@@ -31,31 +31,16 @@ export class BugdetService {
     }
   }
 
-  addOptions(id: string, quantity: number) {
-
-    if (id === 'pages') {
-      this.totalPriceOptions += quantity * 30;
-    }
-
-    if (id === 'languages') {
-      this.totalPriceOptions += quantity * 30;
-    }
-
-    if (quantity < 1) {
-      this.totalPriceOptions = 0;
-    }
-
+  currentBudget(pages: number, languages: number) {
+    this.totalPriceOptions = pages + languages;
   }
 
   //sum budgets value on languages & pages
-  calculateTotal(priceOptions: number, priceWeb: number): number {
-    
-    const totalPrice = priceOptions + priceWeb;
+  calculateTotal(): number {
+    this.totalPrice += this.totalPriceOptions * 30;
+    console.log(this.totalPrice, 'option', this.totalPriceOptions);
 
-    console.log(totalPrice);
-
-    return totalPrice;
-
+    return this.totalPrice;
   }
-  
+
 }

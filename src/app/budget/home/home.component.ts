@@ -11,6 +11,7 @@ export class HomeComponent implements OnInit {
   constructor(public budgetService: BugdetService, private fb: FormBuilder) {}
 
   totalPrice: number = 0;
+  totalPriceOptions: number = 0;
   webChecked: boolean = false;
 
   budgetForm: FormGroup = this.fb.group({
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit {
 
   submitBudget() {
     console.log(this.budgetForm.value);
+    console.log('Total',this.totalPrice + this.totalPriceOptions)
   }
 
   ngOnInit(): void {
@@ -28,20 +30,23 @@ export class HomeComponent implements OnInit {
     this.budgetForm.get('web')?.valueChanges.subscribe((selected: boolean) => {
       this.webChecked = selected;
       this.budgetService.sumCheckboxOptions(selected, 500);
-      this.budgetService.sumCheckboxOptions(selected, 500 + 60);
+      this.calculateTotal();
     });
 
     this.budgetForm.get('seo')?.valueChanges.subscribe((selected: boolean) => {
       this.budgetService.sumCheckboxOptions(selected, 300);
+      this.calculateTotal()
     });
 
     this.budgetForm.get('ads')?.valueChanges.subscribe((selected: boolean) => {
       this.budgetService.sumCheckboxOptions(selected, 200);
+      this.calculateTotal()
     });
 
   }
 
-  calculateTotal(value: number) {
-    this.totalPrice = this.budgetService.calculateTotal(value, 30)
+  calculateTotal() {
+    this.totalPrice = this.budgetService.totalPrice;
   }
+
 }

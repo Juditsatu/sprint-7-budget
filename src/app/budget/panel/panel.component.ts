@@ -1,50 +1,61 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { BugdetService } from '../services/bugdet.service';
 
 @Component({
   selector: 'app-panel',
   templateUrl: './panel.component.html',
-  styleUrls: ['./panel.component.css']
+  styles: []
 })
 export class PanelComponent implements OnInit {
 
-  constructor( public budgetService: BugdetService ) { }
+  constructor( private budgetService: BugdetService ) { }
+
+  @Output() onTotalEvent = new EventEmitter<number>(); 
   
-  totalPricePanel: number = 0;
+  pricePages: number = 1;
+  priceLanguages: number = 1;
+  totalOptions: number = 0;
 
   ngOnInit(): void {
     // this.budgetService.addOptions(this.panelForm.value, this.panelForm.value.pages)
   }
 
   panelForm: FormGroup = new FormGroup({
-    pages: new FormControl(1),
-    languages: new FormControl(1)
+    pages: new FormControl(1, [Validators.required, Validators.pattern(/^[1-9]\d*$/)]),
+    languages: new FormControl(1, [Validators.required, Validators.pattern(/^[1-9]\d*$/)])
   })
 
-  add(id: string){
-
-    if (id === 'pages') {
-      this.panelForm.value.pages++;
-    }
-
-    if (id === 'languages') {
-      this.panelForm.value.languages++;
-    }
-
+  calculate() {
+    this.budgetService.currentBudget(this.pricePages, this.priceLanguages)
   }
 
-  substract(id: string) {
-
-    if (id === 'pages' && this.panelForm.value.pages > 1) {
-      this.panelForm.value.pages--;
+  add(id: string) {
+    if (id === 'pages') {
+      this.pricePages++;
+      this.calculate();
     }
-
-    if (id === 'languages' && this.panelForm.value.languages > 1) {
-      this.panelForm.value.languages--;
+    if (id === 'languages') {
+      this.priceLanguages++;
+      this.calculate();
     }
+  }
 
+  substract(id: string, value: number) {
+    if (id === 'pages' && value > 1) {
+      this.pricePages--;
+      this.calculate();
+    }
+    if (id === 'languages' && value > 1) {
+      this.priceLanguages--;
+      this.calculate();
+    }
+  }
+
+  invalidField(field: string) {
+    return this.panelForm.get(field)?.invalid &&
+           this.panelForm.get(field)?.touched;
   }
 
 }

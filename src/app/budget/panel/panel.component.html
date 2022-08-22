@@ -14,7 +14,7 @@
     <div class="input-group">
       <button
         type="button"
-        (click)="budgetService.addOptions('pages', panelForm.value.pages)"
+        (click)="add('pages')"
         class="btn btn-info text-light"
       >
         <strong>+</strong>
@@ -22,16 +22,21 @@
       <input
         type="number"
         class="form-control"
-        [value]="panelForm.value.pages"
+        [(ngModel)]="pricePages"
         formControlName="pages"
+        min="1"
       />
       <button
         type="button"
-        (click)="budgetService.addOptions('pages', -panelForm.value.pages)"
+        (click)="substract('pages', panelForm.value.pages)"
         class="btn btn-info text-light"
       >
         <strong>-</strong>
       </button>
+      <span class="form-text text-danger"
+            *ngIf="invalidField('pages')" >
+            Invalid number
+      </span>
     </div>
   </div>
 
@@ -46,28 +51,32 @@
     <div class="input-group">
       <button
         type="button"
-        (click)="budgetService.addOptions('languages', panelForm.value.languages)"
+        (click)="add('languages')"
         class="btn btn-info text-light">
         <strong>+</strong>
       </button>
 
       <input
         type="number"
-        [value]="panelForm.value.languages"
+        [(ngModel)]="priceLanguages"
         class="form-control"
         formControlName="languages"
       />
 
       <button
         type="button"
-        (click)="budgetService.addOptions('languages', -panelForm.value.languages)"
+        (click)="substract('languages', panelForm.value.languages)"
         class="btn btn-info text-light"
       >
         <strong>-</strong>
       </button>
+      <span class="form-text text-danger"
+            *ngIf="invalidField('languages')" >
+            Invalid number
+      </span>
     </div>
   </div>
-  <pre> {{ (panelForm.value.pages + panelForm.value.languages) * 30 }} </pre>
+  <span> Total: {{ (pricePages + priceLanguages) * 30 }} </span>
 </div>
 
 
