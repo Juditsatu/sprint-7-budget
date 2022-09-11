@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Budget } from '../interface/budget.interface';
 import { BugdetService } from '../services/bugdet.service';
 
 @Component({
@@ -8,45 +9,79 @@ import { BugdetService } from '../services/bugdet.service';
   styles: [],
 })
 export class HomeComponent implements OnInit {
-  constructor(public budgetService: BugdetService, private fb: FormBuilder) {}
+  
+  constructor(
+    private budgetService: BugdetService, 
+    private fb: FormBuilder
+    ) {}
 
   totalPrice: number = 0;
   totalPriceOptions: number = 0;
   webChecked: boolean = false;
 
+  // budgetList: Budget[] = [];
+ 
   budgetForm: FormGroup = this.fb.group({
-    web: [false],
-    seo: [false],
-    ads: [false],
+    budgetName: ['', Validators.required ],
+    clientName: ['', Validators.required ],
+    web: [false, Validators.required ],
+    seo: [false, Validators.required ],
+    ads: [false, Validators.required ],
   });
 
-  submitBudget() {
-    console.log(this.budgetForm.value);
-    console.log('Total',this.totalPrice + this.totalPriceOptions)
-  }
 
   ngOnInit(): void {
     
     this.budgetForm.get('web')?.valueChanges.subscribe((selected: boolean) => {
       this.webChecked = selected;
       this.budgetService.sumCheckboxOptions(selected, 500);
-      this.calculateTotal();
+      this.updateBugdet();
     });
 
     this.budgetForm.get('seo')?.valueChanges.subscribe((selected: boolean) => {
       this.budgetService.sumCheckboxOptions(selected, 300);
-      this.calculateTotal()
+      this.updateBugdet();
     });
 
     this.budgetForm.get('ads')?.valueChanges.subscribe((selected: boolean) => {
       this.budgetService.sumCheckboxOptions(selected, 200);
-      this.calculateTotal()
+      this.updateBugdet();
     });
 
   }
 
-  calculateTotal() {
+  updateBugdet(): void {
     this.totalPrice = this.budgetService.totalPrice;
+    this.totalPriceOptions = this.budgetService.totalPriceOptions;
+  }
+
+  invalidField(field: string) {
+    return this.budgetForm.get(field)?.invalid &&
+           this.budgetForm.get(field)?.touched;
+  }
+
+  submitBudget() {
+
+    const newBudget: Budget = 
+      {
+        id:         this.budgetService.budgetList.length + 1,
+        budgetName: this.budgetForm.value.budgetName,
+        clientName: this.budgetForm.value.clientName,
+        date:       new Date(),
+        total:      this.totalPrice + this.totalPriceOptions
+      }
+
+    if (this.budgetForm.valid) {
+      this.budgetService.budgetList.push(newBudget)
+      console.log(this.budgetService.budgetList);
+    }
+
+    this.budgetForm.markAllAsTouched();
+  }
+
+  updateTotal(value: number): void {
+    this.budgetService.showTotal(value);
+    this.updateBugdet();
   }
 
 }

@@ -10,12 +10,13 @@
     </div>
 </div>
 
+
 <div class="row bg-light shadow-sm p-5" id="optionsBox">
     <div class="col">
         <h1>My budget list</h1>
         <hr>
-        <table class="table table-striped ">
-            <thead>
+        <table class="table table-striped " >
+            <thead >
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Client</th>
@@ -27,30 +28,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Veronica</td>
-                <td>Vitaldent</td>
-                <td>23/08/2022</td>
-                <td>1,060 €</td>
-                <td><span type="button" class="text-primary bi bi-pencil-fill"></span></td>
-                <td><span type="button" class="text-danger bi bi-trash-fill"></span></td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Paco</td>
-                <td>Optimus</td>
-                <td>23/08/2022</td>
-                <td>500 €</td>
-                <td><span type="button" class="text-primary bi bi-pencil-fill"></span></td>
-                <td><span type="button" class="text-danger bi bi-trash-fill"></span></td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Maribel</td>
-                <td>Lavender</td>
-                <td>23/08/2022</td>
-                <td>300 €</td>
+              <tr *ngFor="let list of budgetList">
+                <th scope="row">{{ list.id }}</th>
+                <td>{{ list.clientName }}</td>
+                <td>{{ list.budgetName }}</td>
+                <td>{{ list.date | date }}</td>
+                <td>{{ list.total | number }} €</td>
                 <td><span type="button" class="text-primary bi bi-pencil-fill"></span></td>
                 <td><span type="button" class="text-danger bi bi-trash-fill"></span></td>
               </tr>

@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { BugdetService } from '../services/bugdet.service';
 
@@ -8,48 +8,64 @@ import { BugdetService } from '../services/bugdet.service';
   templateUrl: './panel.component.html',
   styles: []
 })
-export class PanelComponent implements OnInit {
+export class PanelComponent implements OnInit, OnDestroy {
 
-  constructor( private budgetService: BugdetService ) { }
+  constructor(
+    private budgetService: BugdetService,
+    private fb: FormBuilder,
+    ) { }
 
-  @Output() onTotalEvent = new EventEmitter<number>(); 
+  @Input() totalPriceOptions!: number;
+  @Output() showTotalEvent = new EventEmitter<number>(); 
   
-  pricePages: number = 1;
-  priceLanguages: number = 1;
-  totalOptions: number = 0;
+  numPages: number = 1;
+  numLanguages: number = 1;
 
   ngOnInit(): void {
-    // this.budgetService.addOptions(this.panelForm.value, this.panelForm.value.pages)
+
+    this.panelForm.get('pages')?.valueChanges.subscribe((numPages: number) => {
+      const numLanguages = this.panelForm.get('languages')?.value;
+      this.showTotalEvent.emit(this.budgetService.calculateWebOptions(numPages, numLanguages))
+    });
+    this.panelForm.get('languages')?.valueChanges.subscribe((numLanguages: number) => {
+      const numPages = this.panelForm.get('pages')?.value;
+      this.showTotalEvent.emit(this.budgetService.calculateWebOptions(numPages, numLanguages))
+    });
+    
   }
 
-  panelForm: FormGroup = new FormGroup({
-    pages: new FormControl(1, [Validators.required, Validators.pattern(/^[1-9]\d*$/)]),
-    languages: new FormControl(1, [Validators.required, Validators.pattern(/^[1-9]\d*$/)])
-  })
-
-  calculate() {
-    this.budgetService.currentBudget(this.pricePages, this.priceLanguages)
+  ngOnDestroy(): void {
+    this.showTotalEvent.emit(this.budgetService.calculateWebOptions(0, 0))
   }
+
+  panelForm: FormGroup = this.fb.group({
+    pages:      [1, [Validators.required, Validators.pattern(/^[1-9]\d*$/)]],
+    languages:  [1, [Validators.required, Validators.pattern(/^[1-9]\d*$/)]],
+  });
 
   add(id: string) {
     if (id === 'pages') {
-      this.pricePages++;
-      this.calculate();
+      this.numPages++;
+      // this.totalPriceOptions = this.numPages;
+      // this.calculate();
     }
     if (id === 'languages') {
-      this.priceLanguages++;
-      this.calculate();
+      this.numLanguages++;
+      // this.totalPriceOptions = this.numLanguages;
+      // this.calculate();
     }
   }
 
   substract(id: string, value: number) {
     if (id === 'pages' && value > 1) {
-      this.pricePages--;
-      this.calculate();
+      this.numPages--;
+      // this.totalPriceOptions = this.numPages;
+      // this.calculate();
     }
     if (id === 'languages' && value > 1) {
-      this.priceLanguages--;
-      this.calculate();
+      this.numLanguages--;
+      // this.totalPriceOptions = this.numLanguages;
+      // this.calculate();
     }
   }
 

@@ -29,7 +29,7 @@
       <div class="form-check">
         <input type="checkbox" class="form-check-input" id="web" formControlName="web"/>
         <label class="form-check-lavel" for="web"> Web page (500 €) </label>
-        <app-panel *ngIf="webChecked"></app-panel>
+        <app-panel *ngIf="webChecked" (showTotalEvent)="updateTotal($event)"></app-panel>
       </div>
 
       <div class="form-check">
@@ -46,16 +46,32 @@
       <div class="fs-5 pt-3">
         <p>Total price: 
           <span class="badge bg-primary text-wrap">
-            {{ budgetService.totalPrice + budgetService.totalPriceOptions * 30 | number }} €
+            {{ totalPrice + totalPriceOptions | number }} €
           </span>
         </p>
       </div>
       <div class="pt-3">
         <div class="mb-2">
 
-          <input type="text" class="form-control" placeholder="Budget name">
+          <input  type="text" 
+                  class="form-control"  
+                  formControlName="budgetName" 
+                  placeholder="Budget name">
+                  <p class="form-text text-danger">
+                    <span *ngIf="invalidField('budgetName')">
+                      Please enter your budget name.
+                    </span>
+                  </p>
         </div>
-        <input type="text" class="form-control" placeholder="Client name">
+        <input  type="text" 
+                class="form-control" 
+                formControlName="clientName" 
+                placeholder="Client name">
+                <p class="form-text text-danger">
+                  <span *ngIf="invalidField('clientName')">
+                    Please enter your client name.
+                  </span>
+                </p>
       </div>
       <!-- submit -->
         <div class="row pt-3">

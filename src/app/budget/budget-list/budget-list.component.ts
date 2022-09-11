@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { BugdetService } from '../services/bugdet.service';
 
 @Component({
   selector: 'app-budget-list',
@@ -6,11 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styles: [
   ]
 })
-export class BudgetListComponent implements OnInit {
+export class BudgetListComponent {
 
-  constructor() { }
+  constructor( private budgetService: BugdetService ) { }
 
-  ngOnInit(): void {
+  get budgetList() {
+    return this.budgetService.budgetList;
   }
 
 }
