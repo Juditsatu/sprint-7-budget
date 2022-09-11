@@ -27,4 +27,21 @@ export class BugdetService {
     const totalOptions = (pages + languages) * 30;
     return totalOptions;
   }
+
+  resetTotal() {
+    this.totalPriceOptions = 0;
+    this.totalPrice = 0;
+  }
+
+  saveToLocalStorage(list: Budget[]) {
+    localStorage.setItem('list', JSON.stringify(list))
+  }
+
+  getListFromLocalStorage(key: string) {
+    if (!localStorage.getItem(key)) {
+      return;
+    }
+    JSON.parse(localStorage.getItem(key)!)
+  }
+  
 }

@@ -17,7 +17,7 @@ export class PanelComponent implements OnInit, OnDestroy {
 
   @Input() totalPriceOptions!: number;
   @Output() showTotalEvent = new EventEmitter<number>(); 
-  
+
   numPages: number = 1;
   numLanguages: number = 1;
 
@@ -46,26 +46,18 @@ export class PanelComponent implements OnInit, OnDestroy {
   add(id: string) {
     if (id === 'pages') {
       this.numPages++;
-      // this.totalPriceOptions = this.numPages;
-      // this.calculate();
     }
     if (id === 'languages') {
       this.numLanguages++;
-      // this.totalPriceOptions = this.numLanguages;
-      // this.calculate();
     }
   }
 
   substract(id: string, value: number) {
     if (id === 'pages' && value > 1) {
       this.numPages--;
-      // this.totalPriceOptions = this.numPages;
-      // this.calculate();
     }
     if (id === 'languages' && value > 1) {
       this.numLanguages--;
-      // this.totalPriceOptions = this.numLanguages;
-      // this.calculate();
     }
   }
 

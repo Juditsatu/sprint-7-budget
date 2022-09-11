@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Budget } from '../interface/budget.interface';
 import { BugdetService } from '../services/bugdet.service';
 
@@ -12,14 +13,23 @@ export class HomeComponent implements OnInit {
   
   constructor(
     private budgetService: BugdetService, 
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
     ) {}
 
-  totalPrice: number = 0;
-  totalPriceOptions: number = 0;
   webChecked: boolean = false;
 
-  // budgetList: Budget[] = [];
+  get totalPrice() {
+    return this.budgetService.totalPrice;
+  }
+
+  get totalPriceOptions() {
+    return this.budgetService.totalPriceOptions;
+  }
+
+  get budgetList() {
+    return this.budgetService.budgetList;
+  }
  
   budgetForm: FormGroup = this.fb.group({
     budgetName: ['', Validators.required ],
@@ -35,24 +45,16 @@ export class HomeComponent implements OnInit {
     this.budgetForm.get('web')?.valueChanges.subscribe((selected: boolean) => {
       this.webChecked = selected;
       this.budgetService.sumCheckboxOptions(selected, 500);
-      this.updateBugdet();
     });
 
     this.budgetForm.get('seo')?.valueChanges.subscribe((selected: boolean) => {
       this.budgetService.sumCheckboxOptions(selected, 300);
-      this.updateBugdet();
     });
 
     this.budgetForm.get('ads')?.valueChanges.subscribe((selected: boolean) => {
       this.budgetService.sumCheckboxOptions(selected, 200);
-      this.updateBugdet();
     });
 
-  }
-
-  updateBugdet(): void {
-    this.totalPrice = this.budgetService.totalPrice;
-    this.totalPriceOptions = this.budgetService.totalPriceOptions;
   }
 
   invalidField(field: string) {
@@ -64,7 +66,7 @@ export class HomeComponent implements OnInit {
 
     const newBudget: Budget = 
       {
-        id:         this.budgetService.budgetList.length + 1,
+        id:         this.budgetList.length + 1,
         budgetName: this.budgetForm.value.budgetName,
         clientName: this.budgetForm.value.clientName,
         date:       new Date(),
@@ -72,8 +74,11 @@ export class HomeComponent implements OnInit {
       }
 
     if (this.budgetForm.valid) {
-      this.budgetService.budgetList.push(newBudget)
-      console.log(this.budgetService.budgetList);
+      this.budgetList.push(newBudget);
+      this.router.navigate(['./budget-list']);
+      this.budgetService.saveToLocalStorage(this.budgetList)
+      this.budgetService.resetTotal();
+      console.log(this.budgetList);
     }
 
     this.budgetForm.markAllAsTouched();
@@ -81,7 +86,6 @@ export class HomeComponent implements OnInit {
 
   updateTotal(value: number): void {
     this.budgetService.showTotal(value);
-    this.updateBugdet();
   }
 
 }

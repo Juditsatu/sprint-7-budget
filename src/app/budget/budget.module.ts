@@ -8,6 +8,7 @@ import { ModalComponent } from './modal/modal.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { RouterModule } from '@angular/router';
 import { BudgetListComponent } from './budget-list/budget-list.component';
+import { SortPipe } from './pipes/sort.pipe';
 
 
 
@@ -17,7 +18,8 @@ import { BudgetListComponent } from './budget-list/budget-list.component';
     PanelComponent,
     ModalComponent,
     WelcomePageComponent,
-    BudgetListComponent
+    BudgetListComponent,
+    SortPipe
   ],
   imports: [
     CommonModule,

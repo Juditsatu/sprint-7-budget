@@ -28,13 +28,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let list of budgetList">
+              <tr *ngFor="let list of budgetList; let i = index">
                 <th scope="row">{{ list.id }}</th>
                 <td>{{ list.clientName }}</td>
                 <td>{{ list.budgetName }}</td>
                 <td>{{ list.date | date }}</td>
                 <td>{{ list.total | number }} €</td>
-                <td><span type="button" class="text-primary bi bi-pencil-fill"></span></td>
+                <td><span type="button" class="text-primary bi bi-pencil-fill" (click)="deleteBudget(i)"></span></td>
                 <td><span type="button" class="text-danger bi bi-trash-fill"></span></td>
               </tr>
             </tbody>
